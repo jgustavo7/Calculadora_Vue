@@ -1,34 +1,32 @@
 <script setup>
 import { reactive } from "vue";
 
-const props = (["valorNumero1", "valorNumero2", "trocarFiltro"])
-
 const estado = reactive({
   filtro: "multiplicacao",
   numero1: 0,
   numero2: 0,
 });
 
-const multiplicacao = ({ numero1, numero2 } = estado) => {
-  return Number(numero1 * numero2);
+const multiplicacao = () => {
+  return Number(estado.numero1 * estado.numero2);
 };
 
-const adicao = ({ numero1, numero2 } = estado) => {
-  return Number(numero1 + numero2);
+const adicao = () => {
+  return Number(estado.numero1 + estado.numero2);
 };
 
-const subtracao = ({ numero1, numero2 } = estado) => {
-  return Number(numero1 - numero2);
+const subtracao = () => {
+  return Number(estado.numero1 - estado.numero2);
 };
 
-const divisao = ({ numero1, numero2 } = estado) => {
-  return Number(numero1 / numero2);
+const divisao = () => {
+  return Number(estado.numero1 / estado.numero2);
 };
 
 const resultado = () => {
-  const { numero1, numero2, filtro, } = estado
+  const { numero1, numero2, filtro, } = estado;
 
-  if ((numero1, numero2)) {
+  if (numero1 !== null && numero2 !== null) {
     switch (filtro) {
       case "multiplicacao":        
         return multiplicacao();
@@ -38,6 +36,8 @@ const resultado = () => {
         return subtracao();
         case "divisao":        
         return divisao();
+        default:
+          return null;
     }
   }
 }
@@ -54,11 +54,11 @@ const resultado = () => {
 <form>
   <div class="row d-flex align-items-center">
     <div class="col gap-2 d-flex">
-      <input @keyup="props.valorNumero1" :valor-numero1="(event) => (estado.numero1 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
-      <input @keyup="props.valorNumero2" :valor-numero2="(event) => (estado.numero2 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
+      <input @input="(event) => (estado.numero1 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
+      <input @input="(event) => (estado.numero2 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
     </div>
     <div class="col">
-      <select @change="props.trocarFiltro" :trocar-filtro="(event) => (estado.filtro = event.target.value)" class="form-control text-center">
+      <select @change="(event) => (estado.filtro = event.target.value)" class="form-control text-center">
         <option value="multiplicacao">Multiplicação</option>
         <option value="adicao">Adição</option>
         <option value="subtracao">Subtração</option>
