@@ -1,6 +1,8 @@
 <script setup>
 import { reactive } from "vue";
 
+const props = (["valorNumero1", "valorNumero2", "trocarFiltro"])
+
 const estado = reactive({
   filtro: "multiplicacao",
   numero1: 0,
@@ -8,7 +10,7 @@ const estado = reactive({
 });
 
 const multiplicacao = ({ numero1, numero2 } = estado) => {
-  return numero1 * numero2;
+  return Number(numero1 * numero2);
 };
 
 const adicao = ({ numero1, numero2 } = estado) => {
@@ -16,15 +18,15 @@ const adicao = ({ numero1, numero2 } = estado) => {
 };
 
 const subtracao = ({ numero1, numero2 } = estado) => {
-  return numero1 - numero2;
+  return Number(numero1 - numero2);
 };
 
 const divisao = ({ numero1, numero2 } = estado) => {
-  return numero1 / numero2;
+  return Number(numero1 / numero2);
 };
 
 const resultado = () => {
-  const { numero1, numero2, filtro } = estado
+  const { numero1, numero2, filtro, } = estado
 
   if ((numero1, numero2)) {
     switch (filtro) {
@@ -52,11 +54,11 @@ const resultado = () => {
 <form>
   <div class="row d-flex align-items-center">
     <div class="col gap-2 d-flex">
-      <input :valor-numero1="(event) => (estado.numero1 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
-      <input :valor-numero2="(event) => (estado.numero2 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
+      <input @keyup="props.valorNumero1" :valor-numero1="(event) => (estado.numero1 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
+      <input @keyup="props.valorNumero2" :valor-numero2="(event) => (estado.numero2 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
     </div>
     <div class="col">
-      <select :trocar-filtro="(event) => (estado.filtro = event.target.value)" @change="estado.trocarFiltro" class="form-control text-center">
+      <select @change="props.trocarFiltro" :trocar-filtro="(event) => (estado.filtro = event.target.value)" class="form-control text-center">
         <option value="multiplicacao">Multiplicação</option>
         <option value="adicao">Adição</option>
         <option value="subtracao">Subtração</option>
