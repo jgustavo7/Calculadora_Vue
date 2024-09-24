@@ -1,8 +1,5 @@
 <script setup>
 import { reactive } from "vue";
-import { props } from "vue";
-
-const props = defineProps(["valorNumero1", "valorNumero2", "trocarFiltro"]);
 
 const estado = reactive({
   filtro: "multiplicacao",
@@ -26,47 +23,51 @@ const divisao = ({ numero1, numero2 } = estado) => {
   return numero1 / numero2;
 };
 
-const matematica = () => {
-  const { numero1, numero2, filtro } = estado;
+const resultado = () => {
+  const { numero1, numero2, filtro } = estado
 
   if ((numero1, numero2)) {
     switch (filtro) {
-      case "multiplicacao":
+      case "multiplicacao":        
         return multiplicacao();
-      case "adicao":
+        case "adicao":        
         return adicao();
-      case "subtracao":
+        case "subtracao":        
         return subtracao();
-      case "divisao":
+        case "divisao":        
         return divisao();
     }
   }
-};
+}
 
 </script>
 
 
 <template>
-  <header class="mt-4 text-center">
-    <h1>Operações Matemáticas</h1>
-    <p>Digite os Numeros</p>
-  </header>
-  <form>
-    <div class="row d-flex align-items-center">
-      <div class="col gap-2 d-flex">
-        <input @keyup="props.valorNumero1" :valor-numero1="(event) => (estado.numero1 = Number(event.target.value))" class="form-control" type="number" />
-        <input @keyup="props.valorNumero2" :valor-numero2="(event) => (estado.numero2 = Number(event.target.value))" class="form-control" type="number" />
-      </div>
-      <div class="col">
-        <select @change="props.trocarFiltro" :trocar-filtro="(event) => (estado.filtro = event.target.value)" class="form-control text-center">
-          <option value="multiplicacao">Multiplicação</option>
-          <option value="adicao">Adição</option>
-          <option value="subtracao">Subtração</option>
-          <option value="divisao">Divisão</option>
-        </select>
-      </div>
+<div id="app" data-v-app>
+<div class="container">
+<header class="mt-4 text-center">
+  <h1 class="mb-5">Operações</h1>
+</header>
+<form>
+  <div class="row d-flex align-items-center">
+    <div class="col gap-2 d-flex">
+      <input :valor-numero1="(event) => (estado.numero1 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
+      <input :valor-numero2="(event) => (estado.numero2 = Number(event.target.value))" class="form-control" type="number" placeholder="Digite um numero">
     </div>
-  </form>
+    <div class="col">
+      <select :trocar-filtro="(event) => (estado.filtro = event.target.value)" @change="estado.trocarFiltro" class="form-control text-center">
+        <option value="multiplicacao">Multiplicação</option>
+        <option value="adicao">Adição</option>
+        <option value="subtracao">Subtração</option>
+        <option value="divisao">Divisão</option>
+      </select>
+    </div>
+  </div>
+</form>
+<p class="mt-4 fs-2">Resultado: {{ resultado() }}</p>
+</div>
+</div>
 </template>
 
 <style scoped>
